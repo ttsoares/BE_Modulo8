@@ -9,7 +9,8 @@ export const badRequest = (res: Response, message?: string) => {
 };
 
 export const notFound = (res: Response, message?: string) => {
-  return res.status(404).json({ error: message ?? "DATA_NOT_FOUND" });
+  return res.status(404).json( [] );
+//  return res.status(404).json({ error: message ?? "DATA_NOT_FOUND" });
 };
 
 export const serverError = (res: Response, error: Error) => {
