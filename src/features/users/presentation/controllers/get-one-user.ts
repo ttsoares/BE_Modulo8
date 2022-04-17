@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { Controller } from "../../../../core/presentation/contracts/controller"
 import { UserRepository } from "../../infra/repositories/user.repository"
-
 import { serverError, sucess, notFound }
 from "../../../../core/presentation/helpers/helpers";
 

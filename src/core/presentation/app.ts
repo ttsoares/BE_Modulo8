@@ -18,7 +18,6 @@ export default class App {
   public middlewares() {
     this.#express.use(cors());
     this.#express.use(express.json());
-    this.#express.set('view engine', 'ejs')
   }
 
   public routes() {

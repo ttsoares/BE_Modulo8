@@ -1,5 +1,3 @@
-import { MessageEntity } from
-"../../../../core/infra/data/database/entities/MessageEntitie";
 import { UserEntity } from
 "../../../../core/infra/data/database/entities/UserEntitie";
 import { User } from "../../domain/models/user";
@@ -12,7 +10,6 @@ interface UserParams {
 
 /*
 Localmente consegue apagar usuários com mensagens.
-
 No heroku só consegue apagar usuários SEM mensagens.
 Se o usuário tem uma ou mais mensagens retorna o erro:
   {
@@ -24,7 +21,7 @@ Se o usuário tem uma ou mais mensagens retorna o erro:
 export class UserRepository {
 //***************************
 
-  /////  Cria um novo usuário no DB
+  //  Cria um novo usuário no DB
   async createUser(data: UserParams): Promise<User> {
 
     const userEntity = UserEntity.create({
@@ -37,7 +34,7 @@ export class UserRepository {
     return this.mapperFromEntityToModel(userEntity);
   }
 
-  ///// Remove um usuário
+  // Remove um usuário
   async deleteUser(uid: string): Promise<User | undefined> {
 
     const userEntity = await UserEntity.findOne(uid);
@@ -49,7 +46,7 @@ export class UserRepository {
     return this.mapperFromEntityToModel(userEntity);
   }
 
-  ///// Traz a lista de usuários
+  // Traz a lista de usuários
   async getAllUsers(): Promise<User[]> {
     const userEntities = await UserEntity.find();
 
@@ -58,7 +55,7 @@ export class UserRepository {
     );
   }
 
-  ///// Busca um usuário pelo 'uid'
+  // Busca um usuário pelo 'uid'
   async findById(uid: string): Promise<User | undefined> {
 
     const userEntity = await UserEntity.findOne({
@@ -69,7 +66,7 @@ export class UserRepository {
     return this.mapperFromEntityToModel(userEntity);
   }
 
-  /////  Verifica a existência do usuário
+  //  Verifica a existência do usuário
   async findByName(name: string): Promise<User | undefined> {
 
     const userEntity = await UserEntity.findOne({
@@ -81,7 +78,7 @@ export class UserRepository {
     return this.mapperFromEntityToModel(userEntity);
   }
 
-    /////  Atualiza um usuário no DB
+    //  Atualiza um usuário no DB
   async updateUser(data: UserParams): Promise<User | undefined> {
 
     const updtUser = await UserEntity.findOne({

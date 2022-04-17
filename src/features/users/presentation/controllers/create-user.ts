@@ -1,11 +1,7 @@
 import { Request, Response } from "express";
 import { Controller } from "../../../../core/presentation/contracts/controller"
-
 import { serverError, sucess, badRequest, notFound
 } from "../../../../core/presentation/helpers/helpers";
-
-import { CacheRepository } from "../../../../core/infra/repositories/cache.repository";
-
 import { UserRepository } from "../../infra/repositories/user.repository"
 
 export class CreateUserController implements Controller{

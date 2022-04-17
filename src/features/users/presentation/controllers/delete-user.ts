@@ -1,11 +1,8 @@
 import { Request, Response } from "express";
 import { Controller } from "../../../../core/presentation/contracts/controller"
 import { UserRepository } from "../../infra/repositories/user.repository"
-
 import { serverError, sucess, badRequest }
 from "../../../../core/presentation/helpers/helpers";
-
-import { CacheRepository } from "../../../../core/infra/repositories/cache.repository";
 
 export class DeleteUserController implements Controller{
 	async handle(req: Request, res: Response): Promise<any> {
