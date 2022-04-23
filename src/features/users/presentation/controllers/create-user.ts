@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Controller } from "../../../../core/presentation/contracts/controller"
-import { serverError, sucess, badRequest, notFound
+import { serverError, sucess, badRequest, testAdmToken
 } from "../../../../core/presentation/helpers/helpers";
 import { UserRepository } from "../../infra/repositories/user.repository"
 
@@ -8,7 +8,7 @@ export class CreateUserController implements Controller{
 	async handle(req: Request, res: Response): Promise<any> {
 		try {
 		const { name, password } = req.body;
-
+	
 		const repository = new UserRepository();
 
     const userExists = await repository.findByName(name);

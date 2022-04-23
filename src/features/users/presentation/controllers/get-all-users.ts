@@ -1,11 +1,17 @@
 import { Request, Response } from "express";
 import { Controller } from "../../../../core/presentation/contracts/controller";
-import { serverError, notFound } from "../../../../core/presentation/helpers/helpers";
+import { serverError, testAdmToken } from "../../../../core/presentation/helpers/helpers";
 import { UserRepository } from "../../infra/repositories/user.repository"
 
 export class GetAllUsersController implements Controller{
 	async handle(req: Request, res: Response): Promise<any> {
 		try {
+
+			const admToken = String(req.headers.authorization)
+
+			if (!testAdmToken(admToken)) {
+				return res.status(409).send("Nao autorizado");
+			}
 
 			const repository = new UserRepository();
 			const allUsers = await repository.getAllUsers()

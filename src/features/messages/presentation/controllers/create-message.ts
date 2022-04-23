@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Controller } from "../../../../core/presentation/contracts/controller";
 import { MessageRepository} from "../../infra/repositories/messages.repository";
 
-import { serverError, sucess, badRequest }
+import { serverError, sucess, badRequest, authorized }
 from "../../../../core/presentation/helpers/helpers";
 
 export class CreateMessageController implements Controller{
@@ -10,6 +10,12 @@ export class CreateMessageController implements Controller{
 		try {
 			const user_id = req.params.userid;
 			const { description, details } = req.body;
+
+			const token = String(req.headers.authorization)
+
+			if (!authorized(token)) { // Test the token
+				return res.status(409).send("Nao autorizado");
+			}
 
 			const repository = new MessageRepository();
 			const message = await repository.createMessage({

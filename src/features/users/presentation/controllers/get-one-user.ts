@@ -1,20 +1,25 @@
 import { Request, Response } from "express";
 import { Controller } from "../../../../core/presentation/contracts/controller"
 import { UserRepository } from "../../infra/repositories/user.repository"
-import { serverError, sucess, notFound }
+import { serverError, sucess, notFound, testAdmToken }
 from "../../../../core/presentation/helpers/helpers";
 
 export class GetOneUserController implements Controller{
 	async handle(req: Request, res: Response): Promise<any> {
 		try {
 			const user_id = req.params.userid
+			const admToken = String(req.headers.authorization)
 
-		const repository = new UserRepository();
-    const user  = await repository.findById(user_id);
+			if (!testAdmToken(admToken)) {
+				return res.status(409).send("Nao autorizado");
+			}
 
-		if (!user) return notFound(res, "Usuário não encontrado !");
+			const repository = new UserRepository();
+			const user  = await repository.findById(user_id);
 
-    return sucess(res, user);
+			if (!user) return notFound(res, "Usuário não encontrado !");
+
+			return sucess(res, user);
 
 	} catch (err:any) {
 			return serverError(res, err);

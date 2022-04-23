@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import UserRoutes from "../../features/users/presentation/routes/routes";
 import MessageRoutes from "../../features/messages/presentation/routes/routes";

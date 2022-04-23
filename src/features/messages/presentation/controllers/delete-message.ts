@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Controller } from "../../../../core/presentation/contracts/controller";
 import { MessageRepository} from "../../infra/repositories/messages.repository";
 
-import { serverError, sucess, notFound }
+import { serverError, sucess, notFound, authorized }
 from "../../../../core/presentation/helpers/helpers";
 
 export class DeleteMessageController implements Controller{
@@ -10,6 +10,12 @@ export class DeleteMessageController implements Controller{
 
 		try {
 			const message_id = req.params.messageid;
+
+			const token = String(req.headers.authorization)
+			if (!authorized(token)) { // Test the token
+				return res.status(409).send("Nao autorizado");
+			}
+
 			const repository = new MessageRepository();
 			const removedMessage = await repository.delete(message_id)
 

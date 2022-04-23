@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Controller } from "../../../../core/presentation/contracts/controller";
 import { MessageRepository} from "../../infra/repositories/messages.repository";
-import { serverError, sucess, notFound }
+import { serverError, sucess, notFound, authorized }
 from "../../../../core/presentation/helpers/helpers";
 
 export class UpdateMessageController implements Controller{
@@ -9,6 +9,12 @@ export class UpdateMessageController implements Controller{
 		try {
 			const message_id = req.params.messageid;
 			const { description, details } = req.body;
+
+			const token = String(req.headers.authorization)
+			if (!authorized(token)) { // Test the token
+				return res.status(409).send("Not authorized");
+			}
+
 			const repository = new MessageRepository();
 			const message = await repository.update({
 				description: description, details: details, uid:message_id

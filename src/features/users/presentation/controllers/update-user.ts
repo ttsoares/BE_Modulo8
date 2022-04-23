@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Controller } from "../../../../core/presentation/contracts/controller";
 import { UserRepository } from "../../infra/repositories/user.repository";
-import { serverError, sucess, badRequest, notFound }
+import { serverError, sucess, badRequest, notFound, testAdmToken }
 from "../../../../core/presentation/helpers/helpers";
 
 export class UpdateUserController implements Controller{
@@ -9,6 +9,12 @@ export class UpdateUserController implements Controller{
 		try {
 			const user_id = req.params.userid;
 			const { name, password }: { name: string; password: string } = req.body;
+
+			const admToken = String(req.headers.authorization)
+
+			if (!testAdmToken(admToken)) {
+				return res.status(409).send("Nao autorizado");
+			}
 
 			const repository = new UserRepository();
 
